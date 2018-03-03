@@ -5,7 +5,6 @@ import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -22,13 +21,10 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.graphics.Palette;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +46,6 @@ import com.kunel.lantimat.kunelradio.KunelRestClient;
 import com.kunel.lantimat.kunelradio.R;
 import com.kunel.lantimat.kunelradio.Utils.SharedPrefHelp;
 import com.kunel.lantimat.kunelradio.Utils.SquareImageView;
-import com.kunel.lantimat.kunelradio.adapters.UltraPagerAdapter;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -73,9 +68,6 @@ import java.util.concurrent.TimeUnit;
 import cz.msebera.android.httpclient.Header;
 import dyanamitechetan.vusikview.VusikView;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
-import jp.wasabeef.picasso.transformations.CropTransformation;
-import me.crosswall.lib.coverflow.CoverFlow;
-import me.crosswall.lib.coverflow.core.PagerContainer;
 
 
 /**
@@ -350,6 +342,7 @@ public class CoolRadioFragment extends Fragment {
             }
         });*/
     }
+
     private void initPager2(final View v) {
         ultraViewPager = (UltraViewPager) v.findViewById(R.id.pager);
         ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
@@ -357,6 +350,7 @@ public class CoolRadioFragment extends Fragment {
         ultraViewPager.setItemRatio(1.0f);
         ultraViewPager.setPageTransformer(false, new UltraScaleTransformer());
         ultraViewPager.setInfiniteRatio(100);
+        ultraViewPager.setAutoScroll(10000);
 
         adapter = new MyPagerAdapter();
         ultraViewPager.setAdapter(adapter);
@@ -508,7 +502,7 @@ public class CoolRadioFragment extends Fragment {
 
     private void updatePlaybackState(PlaybackStateCompat state) {
         if (state == null) {
-            mPlayPauseToggleButton.setImageResource(R.drawable.ic_play_white_24dp);
+            mPlayPauseToggleButton.setImageResource(R.drawable.ic_play_white_36dp);
             Log.d(TAG, "STATE_NULL");
             return;
         }
@@ -517,19 +511,19 @@ public class CoolRadioFragment extends Fragment {
         mCurrentState = state.getState();
         switch (state.getState()) {
             case PlaybackStateCompat.STATE_PLAYING:
-                mPlayPauseToggleButton.setImageResource(R.drawable.ic_pause_white_24dp);
+                mPlayPauseToggleButton.setImageResource(R.drawable.ic_pause_white_36dp);
                 progressBarPlay.setVisibility(View.INVISIBLE);
                 tvNowDuration.setVisibility(View.VISIBLE);
                 //scheduleSeekbarUpdate();
                 break;
             case PlaybackStateCompat.STATE_PAUSED:
-                mPlayPauseToggleButton.setImageResource(R.drawable.ic_play_white_24dp);
+                mPlayPauseToggleButton.setImageResource(R.drawable.ic_play_white_36dp);
                 break;
             case PlaybackStateCompat.STATE_NONE:
                 Log.d(TAG, "STATE_NONE");
                 break;
             case PlaybackStateCompat.STATE_STOPPED:
-                mPlayPauseToggleButton.setImageResource(R.drawable.ic_play_white_24dp);
+                mPlayPauseToggleButton.setImageResource(R.drawable.ic_play_white_36dp);
                 tvNowDuration.setVisibility(View.INVISIBLE);
                 Log.d(TAG, "STATE_STOPPED");
                 break;
@@ -547,10 +541,10 @@ public class CoolRadioFragment extends Fragment {
         float volumeToSend = 0f;
         if(nowVolume>0) {
             volumeToSend = 0f;
-            muteButton.setImageResource(R.drawable.ic_volume_high_white_18dp);
+            muteButton.setImageResource(R.drawable.ic_volume_high_white_24dp);
         } else {
             volumeToSend = 1f;
-            muteButton.setImageResource(R.drawable.ic_volume_mute_white_18dp);
+            muteButton.setImageResource(R.drawable.ic_volume_mute_white_24dp);
         }
         bundle.putFloat(BackgroundAudioService.VOLUME, volumeToSend);
         mMediaControllerCompat.sendCommand(BackgroundAudioService.VOLUME, bundle, new ResultReceiver(new Handler(new Handler.Callback() {

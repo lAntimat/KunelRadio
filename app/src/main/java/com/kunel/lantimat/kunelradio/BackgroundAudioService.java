@@ -14,7 +14,6 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PowerManager;
 import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,7 +30,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
@@ -354,7 +352,7 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
             return;
         }
 
-        builder.addAction(new NotificationCompat.Action(R.drawable.ic_play_white_24dp, "Play", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
+        builder.addAction(new NotificationCompat.Action(R.drawable.ic_play_white_36dp, "Play", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
         builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
         builder.setSmallIcon(R.drawable.butterfly_48);
         builder.setDeleteIntent(createOnDismissedIntent(getApplicationContext(), 1));
