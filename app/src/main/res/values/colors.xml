@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">@color/colorAccent</color>
+    <color name="colorAccent">#ff4081</color>
+    <color name="colorPrimary">@color/md_green_400</color>
+    <color name="colorPrimaryDark">@color/md_green_700</color>
+    <color name="colorPrimaryLight">#BBDEFB</color>
+    <color name="materialize_accent">@color/accent</color>
+    <color name="materialize_primary">@color/primary</color>
+    <color name="materialize_primary_dark">@color/primary_dark</color>
+    <color name="materialize_primary_light">@color/primary_light</color>
+
+    <color name="textAndIcons">#EDEDED</color>
+
+    <color name="colorPink">#F3716C</color>
+    <color name="colorTextDark">#636363</color>
+    <color name="colorTextGrey">#66484848</color>
+    <color name="colorButtonDark">#4B4B4B</color>
+    <color name="colorButtonGrey">#424242</color>
+
+    <color name="player_bg">@color/md_blue_300</color>
+</resources>

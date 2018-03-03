@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        applicationId "com.kunel.lantimat.kunelradio"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.google.com" }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:palette-v7:25.3.1'
+    compile 'com.aurelhubert:ahbottomnavigation:2.0.6'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.android.support:support-v13:25.3.1'
+    compile 'dyanamitechetan.vusikview:vusikview:1.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'org.jsoup:jsoup:1.10.3'
+    compile 'jp.wasabeef:blurry:2.1.1'
+    compile 'com.google.android.exoplayer:exoplayer:r2.5.1'
+    compile 'org.hamcrest:hamcrest-core:1.3'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'me.relex:circleindicator:1.2.2@aar'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.github.okaybroda:ImageZoom:1.1.0'
+    testCompile 'junit:junit:4.12'
+    compile project(':coverflow')
+    compile 'jp.wasabeef:picasso-transformations:2.2.1'
+
+}

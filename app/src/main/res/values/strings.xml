@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Кунел радиосы</string>
+
+    <string name="tab_1">Радио</string>
+    <string name="tab_2">Новости</string>
+    <string name="tab_3">Instagram</string>
+    <string name="tab_4">Еще</string>
+    <string name="title_activity_full_feed">FullFeedActivity</string>
+    <string name="title_activity_instagram_full_media">InstagramFullMediaActivity</string>
+</resources>
