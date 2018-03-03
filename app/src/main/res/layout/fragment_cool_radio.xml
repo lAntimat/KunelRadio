@@ -1,38 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.tmall.ultraviewpager.UltraViewPager
+        android:id="@+id/pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_song"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="400dp"
+        tools:layout_conversion_absoluteWidth="411dp" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/ll_bottom"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="4dp"
-        android:weightSum="5">
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:weightSum="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_conversion_absoluteHeight="70dp"
+        tools:layout_conversion_absoluteWidth="403dp">
 
         <ImageButton
             android:id="@+id/imageButton4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/round_button"
             android:padding="10dp"
             android:src="@drawable/ic_volume_mute_white_18dp"
             app:layout_constraintBottom_toBottomOf="@+id/playPauseBtn"
             app:layout_constraintEnd_toStartOf="@+id/playPauseBtn"
-            app:layout_constraintTop_toTopOf="@+id/playPauseBtn" />
+            app:layout_constraintTop_toTopOf="@+id/playPauseBtn"
+            tools:layout_conversion_absoluteHeight="38dp"
+            tools:layout_conversion_absoluteWidth="38dp" />
 
         <ImageButton
             android:id="@+id/playPauseBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/round_button"
             android:padding="15dp"
@@ -40,115 +61,148 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="54dp"
+            tools:layout_conversion_absoluteWidth="54dp" />
 
 
         <ImageButton
             android:id="@+id/imageButton6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:background="@drawable/round_button"
             android:padding="10dp"
             android:src="@drawable/ic_stop_white_18dp"
             app:layout_constraintBottom_toBottomOf="@+id/playPauseBtn"
             app:layout_constraintStart_toEndOf="@+id/playPauseBtn"
-            app:layout_constraintTop_toTopOf="@+id/playPauseBtn" />
+            app:layout_constraintTop_toTopOf="@+id/playPauseBtn"
+            tools:layout_conversion_absoluteHeight="38dp"
+            tools:layout_conversion_absoluteWidth="38dp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/playPauseBtn"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/playPauseBtn"
-            app:layout_constraintStart_toEndOf="@+id/imageButton4"
-            app:layout_constraintTop_toTopOf="@+id/playPauseBtn" />
+            app:layout_constraintHorizontal_bias="0.411"
+            app:layout_constraintStart_toStartOf="@+id/playPauseBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="64dp"
+            tools:layout_conversion_absoluteWidth="64dp" />
 
     </android.support.constraint.ConstraintLayout>
-    <RelativeLayout
-        android:id="@+id/rl_progress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/ll_bottom"
-        android:layout_margin="@dimen/space16">
-        <TextView
-            android:id="@+id/tv_current_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="2:01"
-            android:textSize="14sp"
-            android:textColor="@color/colorTextGrey"/>
 
-        <TextView
-            android:id="@+id/tv_full_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textColor="@color/colorTextGrey"
-            android:textSize="14sp" />
-
-        <ProgressBar
-            android:id="@+id/progressBarRadio"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/space8"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/space16"
-            android:layout_marginRight="@dimen/space16"
-            android:layout_toLeftOf="@id/tv_full_time"
-            android:layout_toRightOf="@id/tv_current_time"
-            android:indeterminate="false"
-            android:progress="0"
-            android:progressBackgroundTint="#E9E9E9"
-            android:progressDrawable="@drawable/progress_bar" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv_artist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/rl_progress"
-        android:layout_centerHorizontal="true"
-        android:text="Радио настроение"
-        android:textColor="@color/colorTextGrey"
-        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/tv_artist"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/space8"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="Кунел радиосы"
         android:textColor="@color/colorTextDark"
-        android:textSize="18sp" />
-    <me.crosswall.lib.coverflow.core.PagerContainer
-        android:id="@+id/pager_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/tv_song"
-        android:layout_marginTop="@dimen/space16"
-        android:layout_marginBottom="@dimen/space16">
-        <android.support.v4.view.ViewPager
-            android:id="@+id/overlap_pager"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center"/>
-    </me.crosswall.lib.coverflow.core.PagerContainer>
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_artist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_conversion_absoluteHeight="24dp"
+        tools:layout_conversion_absoluteWidth="129dp" />
+
+    <TextView
+        android:id="@+id/tv_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Радио настроение"
+        android:textColor="@color/colorTextGrey"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_conversion_absoluteHeight="19dp"
+        tools:layout_conversion_absoluteWidth="123dp" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/progress"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBarRadio"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:indeterminate="false"
+            android:progress="0"
+            android:progressBackgroundTint="#E9E9E9"
+            android:progressDrawable="@drawable/progress_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_full_time"
+            app:layout_constraintStart_toEndOf="@+id/tv_current_time"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="8dp"
+            tools:layout_conversion_absoluteWidth="320dp" />
+
+        <TextView
+            android:id="@+id/tv_full_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorTextGrey"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBarRadio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/progressBarRadio"
+            app:layout_constraintTop_toTopOf="@+id/progressBarRadio"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="0dp" />
+
+        <TextView
+            android:id="@+id/tv_current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="2:01"
+            android:textColor="@color/colorTextGrey"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBarRadio"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/progressBarRadio"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="27dp" />
+    </android.support.constraint.ConstraintLayout>
 
     <ImageView
         android:id="@+id/testIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ll_bottom"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="9dp"
-        app:srcCompat="@drawable/bg_radio" />
-</RelativeLayout>
+        android:visibility="gone"
+        app:srcCompat="@drawable/bg_radio"
+        tools:layout_conversion_absoluteHeight="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_conversion_absoluteWidth="0dp" />
+
+</android.support.constraint.ConstraintLayout>

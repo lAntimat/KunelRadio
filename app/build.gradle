@@ -56,4 +56,7 @@ dependencies {
     compile project(':coverflow')
     compile 'jp.wasabeef:picasso-transformations:2.2.1'
     compile 'com.google.code.gson:gson:2.8.2'
+    compile ('com.alibaba.android:ultraviewpager:1.0.6.1@aar') {
+        transitive = true
+    }
 }
