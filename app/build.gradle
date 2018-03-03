@@ -55,5 +55,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':coverflow')
     compile 'jp.wasabeef:picasso-transformations:2.2.1'
-
+    compile 'com.google.code.gson:gson:2.8.2'
 }

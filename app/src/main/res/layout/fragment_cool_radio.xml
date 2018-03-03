@@ -141,4 +141,14 @@
             android:layout_height="300dp"
             android:layout_gravity="center"/>
     </me.crosswall.lib.coverflow.core.PagerContainer>
+
+    <ImageView
+        android:id="@+id/testIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ll_bottom"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="9dp"
+        app:srcCompat="@drawable/bg_radio" />
 </RelativeLayout>
