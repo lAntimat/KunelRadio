@@ -52,6 +52,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.tmall.ultraviewpager.UltraViewPager;
+import com.tmall.ultraviewpager.transformer.UltraDepthScaleTransformer;
 import com.tmall.ultraviewpager.transformer.UltraScaleTransformer;
 
 import org.jsoup.Jsoup;
@@ -84,7 +85,7 @@ public class CoolRadioFragment extends Fragment {
     private View v;
     private Target target;
     private ViewPager pager;
-    private ImagesAdapter adapter;;
+    private ImagesAdapter adapter;
     private boolean cashEmpty = true;
 
     public static int[] covers = {R.drawable.bg_radio, R.drawable.bg_radio, R.drawable.bg_radio, R.drawable.bg_radio, R.drawable.bg_radio, R.drawable.bg_radio};
@@ -274,7 +275,6 @@ public class CoolRadioFragment extends Fragment {
             }
         });
 
-        adapter = new ImagesAdapter(getContext(), arImages);
 
         //initPager3(v);
         initViewPager(v);
@@ -282,13 +282,7 @@ public class CoolRadioFragment extends Fragment {
         return v;
     }
 
-    private void initPager3(final View v) {
-        ViewPager pager = (ViewPager) v.findViewById(R.id.pager);
-        PagerAdapter adapter = new MyPagerAdapter(arImages);
-        pager.setAdapter(adapter);
-        pager.setOffscreenPageLimit(8);
-        pager.setPageTransformer(false, new UltraScaleTransformer());
-
+    private void initViewPager(View v) {
 
         target = new Target() {
             @Override
@@ -308,31 +302,11 @@ public class CoolRadioFragment extends Fragment {
             }
         };
 
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                //tv_song.setText(song[position]);
-//                RelativeLayout relativeLayout = (RelativeLayout) pager.getAdapter().instantiateItem(pager, position);
-                //              ViewCompat.setElevation(relativeLayout.getRootView(), 8.0f);
-                Picasso.with(getContext()).load(arImages.get(position)).into(target);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-    private void initViewPager(View v) {
         pager = v.findViewById(R.id.pager);
+        adapter = new ImagesAdapter(getContext(), arImages);
         pager.setAdapter(adapter);
-        pager.setCurrentItem(0);
+        pager.setOffscreenPageLimit(8);
+        pager.setPageTransformer(false, new UltraScaleTransformer());
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -408,61 +382,6 @@ public class CoolRadioFragment extends Fragment {
         }
     }
 
-    private void initSlider() {
-
-
-        SharedPreferences prefs = getActivity().getSharedPreferences("slider", 0);
-        if(prefs.getAll()!=null) {
-            for (Map.Entry entry : prefs.getAll().entrySet())
-                url_maps.put(entry.getKey().toString(), entry.getValue().toString());
-        }
-
-
-        for(String name : url_maps.keySet()){
-           //TextSliderView textSliderView = new TextSliderView(getContext());
-            // initialize a SliderLayout
-
-            DefaultSliderView defaultSliderView = new DefaultSliderView(getContext());
-            defaultSliderView.image(url_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                        @Override
-                        public void onSliderClick(BaseSliderView slider) {
-
-                        }
-                    });
-
-            //add your extra information
-            //textSliderView.bundle(new Bundle());
-            //textSliderView.getBundle()
-                    //.putString("extra",name);
-
-            mDemoSlider.addSlider(defaultSliderView);
-        }
-
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Fade);
-        //mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomIndicator(pagerIndicator);
-        //mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(10000);
-        mDemoSlider.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                //Blurry.with(getContext()).radius(25).sampling(2).onto((ViewGroup) rootView);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
     private void updatePlaybackState(PlaybackStateCompat state) {
         if (state == null) {
             mPlayPauseToggleButton.setImageResource(R.drawable.ic_play_white_36dp);
@@ -518,26 +437,6 @@ public class CoolRadioFragment extends Fragment {
         })));
 
         Log.d(TAG, "updateMuteButton vol=" + volumeToSend);
-    }
-
-    private void scheduleSeekbarUpdate() {
-        stopSeekbarUpdate();
-        if (!mExecutorService.isShutdown()) {
-            mScheduleFuture = mExecutorService.scheduleAtFixedRate(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            mHandler.post(mUpdateProgressTask);
-                        }
-                    }, PROGRESS_UPDATE_INITIAL_INTERVAL,
-                    PROGRESS_UPDATE_INTERNAL, TimeUnit.MILLISECONDS);
-        }
-    }
-
-    private void stopSeekbarUpdate() {
-        if (mScheduleFuture != null) {
-            mScheduleFuture.cancel(false);
-        }
     }
 
     private void updateProgress() {
@@ -596,7 +495,6 @@ public class CoolRadioFragment extends Fragment {
 
     @Override
     public void onStop() {
-//        mDemoSlider.stopAutoCycle();
         super.onStop();
     }
 
