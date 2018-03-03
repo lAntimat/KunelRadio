@@ -352,7 +352,7 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
             return;
         }
 
-        builder.addAction(new NotificationCompat.Action(R.drawable.ic_play_white_36dp, "Play", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
+        builder.addAction(new NotificationCompat.Action(R.drawable.ic_play_white_24dp, "Play", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
         builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
         builder.setSmallIcon(R.drawable.butterfly_48);
         builder.setDeleteIntent(createOnDismissedIntent(getApplicationContext(), 1));

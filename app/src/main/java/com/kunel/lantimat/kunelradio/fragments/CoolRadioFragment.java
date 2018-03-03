@@ -2,6 +2,7 @@ package com.kunel.lantimat.kunelradio.fragments;
 
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -46,6 +47,7 @@ import com.kunel.lantimat.kunelradio.KunelRestClient;
 import com.kunel.lantimat.kunelradio.R;
 import com.kunel.lantimat.kunelradio.Utils.SharedPrefHelp;
 import com.kunel.lantimat.kunelradio.Utils.SquareImageView;
+import com.kunel.lantimat.kunelradio.adapters.ImagesAdapter;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -80,10 +82,11 @@ public class CoolRadioFragment extends Fragment {
     SliderLayout mDemoSlider;
     VusikView vusikView;
     private View v;
-    private UltraViewPager pager;
     private Target target;
-    private UltraViewPager ultraViewPager;
-    MyPagerAdapter adapter;
+    private ViewPager pager;
+    private ImagesAdapter adapter;;
+    private boolean cashEmpty = true;
+
     public static int[] covers = {R.drawable.bg_radio, R.drawable.bg_radio, R.drawable.bg_radio, R.drawable.bg_radio, R.drawable.bg_radio, R.drawable.bg_radio};
     public static String[] song = {"Make War", "Shadow", "Black Parade","Make War", "Shadow", "Black Parade" };
 
@@ -211,7 +214,6 @@ public class CoolRadioFragment extends Fragment {
         mMediaBrowserCompat = new MediaBrowserCompat(getContext(), new ComponentName((getActivity()), BackgroundAudioService.class),
                 mMediaBrowserCompatConnectionCallback, getActivity().getIntent().getExtras());
         mMediaBrowserCompat.connect();
-
         //parseSliderImage();
     }
 
@@ -222,6 +224,7 @@ public class CoolRadioFragment extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_cool_radio, null);
 
+        //initPager2(v);
         mPlayPauseToggleButton = (ImageButton) v.findViewById(R.id.playPauseBtn);
         muteButton = (ImageButton) v.findViewById(R.id.imageButton4);
         stopButton = (ImageButton) v.findViewById(R.id.imageButton6);
@@ -271,44 +274,27 @@ public class CoolRadioFragment extends Fragment {
             }
         });
 
+        adapter = new ImagesAdapter(getContext(), arImages);
+
+        //initPager3(v);
+        initViewPager(v);
         parseSliderImage();
-        initPager2(v);
-        //initPager2(v);
         return v;
     }
 
-    private void initPager(final View v) {
-       /* //PagerContainer container = (PagerContainer) v.findViewById(R.id.pager_container);
-        //pager = container.getViewPager();
-        pager = v.findViewById(R.id.pager);
-        pager.setAdapter(new MyPagerAdapter());
-        pager.setClipChildren(false);
-        //
+    private void initPager3(final View v) {
+        ViewPager pager = (ViewPager) v.findViewById(R.id.pager);
+        PagerAdapter adapter = new MyPagerAdapter(arImages);
+        pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(8);
+        pager.setPageTransformer(false, new UltraScaleTransformer());
 
-        boolean showTransformer = getActivity().getIntent().getBooleanExtra("showTransformer",true);
-
-
-        if(showTransformer){
-
-            new CoverFlow.Builder()
-                    .with(pager)
-                    .scale(0.3f)
-                    .pagerMargin(getResources().getDimensionPixelSize(R.dimen.pager_margin))
-                    .spaceSize(0f)
-                    .build();
-
-        }else{
-            pager.setPageMargin(30);
-        }
 
         target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 Palette palette = Palette.from(bitmap).generate();
                 setStatusBar(palette);
-                ImageView imageView = v.findViewById(R.id.testIv);
-                imageView.setImageBitmap(bitmap);
             }
 
             @Override
@@ -331,8 +317,8 @@ public class CoolRadioFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 //tv_song.setText(song[position]);
-                RelativeLayout relativeLayout = (RelativeLayout) pager.getAdapter().instantiateItem(pager, position);
-                ViewCompat.setElevation(relativeLayout.getRootView(), 8.0f);
+//                RelativeLayout relativeLayout = (RelativeLayout) pager.getAdapter().instantiateItem(pager, position);
+                //              ViewCompat.setElevation(relativeLayout.getRootView(), 8.0f);
                 Picasso.with(getContext()).load(arImages.get(position)).into(target);
             }
 
@@ -340,42 +326,14 @@ public class CoolRadioFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });*/
+        });
     }
 
-    private void initPager2(final View v) {
-        ultraViewPager = (UltraViewPager) v.findViewById(R.id.pager);
-        ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
-        ultraViewPager.setMultiScreen(0.8f);
-        ultraViewPager.setItemRatio(1.0f);
-        ultraViewPager.setPageTransformer(false, new UltraScaleTransformer());
-        ultraViewPager.setInfiniteRatio(100);
-        ultraViewPager.setAutoScroll(10000);
-
-        adapter = new MyPagerAdapter();
-        ultraViewPager.setAdapter(adapter);
-
-        target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Palette palette = Palette.from(bitmap).generate();
-                setStatusBar(palette);
-                ImageView imageView = v.findViewById(R.id.testIv);
-                imageView.setImageBitmap(bitmap);
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-
-        ultraViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    private void initViewPager(View v) {
+        pager = v.findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+        pager.setCurrentItem(0);
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -383,9 +341,6 @@ public class CoolRadioFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                //tv_song.setText(song[position]);
-//                RelativeLayout relativeLayout = (RelativeLayout) pager.getAdapter().instantiateItem(pager, position);
-  //              ViewCompat.setElevation(relativeLayout.getRootView(), 8.0f);
                 Picasso.with(getContext()).load(arImages.get(position)).into(target);
             }
 
@@ -421,8 +376,12 @@ public class CoolRadioFragment extends Fragment {
     private void loadViewPagerImagesFromCash() {
         if(SharedPrefHelp.getArrayList(getContext(), "array")!=null) {
             ArrayList<String> ar = SharedPrefHelp.getArrayList(getContext(), "array");
-            if(ar!=null) arImages.addAll(ar);
-            //adapter.notifyDataSetChanged();
+            if(ar!=null) {
+                arImages.addAll(ar);
+                if(pager!=null)
+                pager.getAdapter().notifyDataSetChanged();
+
+            }
         }
     }
 
@@ -438,11 +397,15 @@ public class CoolRadioFragment extends Fragment {
         Document doc = Jsoup.parse(str);
         Elements sliderImages = doc.select("img.slider-5807");
         arImages.clear();
+        ArrayList<String> arTemp = new ArrayList<>();
         for (int j = 0; j < sliderImages.size(); j++) {
-            arImages.add(sliderImages.get(j).attr("src"));
+            arTemp.add(sliderImages.get(j).attr("src"));
         }
-        SharedPrefHelp.saveArrayList(getContext(), arImages, "array");
-        //adapter.notifyDataSetChanged();
+        SharedPrefHelp.saveArrayList(getContext(), arTemp, "array");
+        if(pager!=null){
+            arImages.addAll(arTemp);
+            pager.getAdapter().notifyDataSetChanged();
+        }
     }
 
     private void initSlider() {
@@ -649,20 +612,30 @@ public class CoolRadioFragment extends Fragment {
 
     private class MyPagerAdapter extends PagerAdapter {
 
+        ArrayList<String> ar;
+
+        public MyPagerAdapter(ArrayList<String> ar) {
+            this.ar = ar;
+        }
+
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
 
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cover,null);
+            LayoutInflater inflater = (LayoutInflater) getContext()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.item_cover, container,
+                    false);
+            //View view = LayoutInflater.from(getContext()).inflate(R.layout.item_cover,null);
             final SquareImageView imageViewBg = (SquareImageView) view.findViewById(R.id.image_cover);
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
 
             Picasso.with(getContext())
-                    .load(arImages.get(position))
+                    .load(ar.get(position))
                     .resize(300, 170)
                     .transform(new BlurTransformation(getContext()))
                     .into(imageViewBg);
 
-            Picasso.with(getContext()).load(arImages.get(position))
+            Picasso.with(getContext()).load(ar.get(position))
                     .into(imageView);
             //imageView.setImageDrawable(getResources().getDrawable(covers[position]));
             //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -677,6 +650,7 @@ public class CoolRadioFragment extends Fragment {
 
         @Override
         public int getCount() {
+            if(arImages==null) return 0;
             return arImages.size();
         }
 
