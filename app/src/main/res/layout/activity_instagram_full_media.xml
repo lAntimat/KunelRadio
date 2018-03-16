@@ -94,7 +94,8 @@
                     android:layout_marginTop="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="5dp"
-                    android:textColor="@color/md_black_1000" />
+                    android:textColor="@color/md_black_1000"
+                    tools:ignore="NotSibling" />
 
                 <TextView
                     android:id="@+id/description"
@@ -128,6 +129,7 @@
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
         android:visibility="gone"
-        app:srcCompat="@drawable/bg_radio" />
+        app:srcCompat="@drawable/bg_radio"
+        tools:ignore="NotSibling" />
 
 </RelativeLayout>

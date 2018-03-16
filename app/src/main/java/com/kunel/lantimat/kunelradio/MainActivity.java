@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
 
     static final String TAG = "MainActivity";
-    static final int PAGE_COUNT = 4;
+    static final int PAGE_COUNT = 2;
 
     NonSwipeableViewPager pager;
     PagerAdapter pagerAdapter;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPagingEnabled(false);
-        pager.setOffscreenPageLimit(4);
+        pager.setOffscreenPageLimit(2);
     }
 
 
@@ -146,10 +146,6 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return new CoolRadioFragment();
                 case 1:
-                    return new FeedFragment();
-                case 2:
-                    return new InstagramFragment();
-                case 3:
                     return new FeedFragment();
             }
             return null;
