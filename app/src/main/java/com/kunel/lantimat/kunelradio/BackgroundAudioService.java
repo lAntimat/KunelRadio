@@ -82,7 +82,7 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
 
     private SimpleExoPlayer mMediaPlayer;
 
-    MediaSource mediaSource;
+    private boolean isPauseBtnClicked = true;
 
     private final Runnable mUpdateProgressTask = new Runnable() {
         @Override
@@ -120,6 +120,7 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
                 return;
             }
 
+            isPauseBtnClicked = false;
             mMediaSessionCompat.setActive(true);
             setMediaPlaybackState(PlaybackStateCompat.STATE_PLAYING);
 
@@ -133,7 +134,7 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
         @Override
         public void onPause() {
             super.onPause();
-
+            isPauseBtnClicked = true;
             mMediaPlayer.setPlayWhenReady(false);
             setMediaPlaybackState(PlaybackStateCompat.STATE_PAUSED);
             showPausedNotification();
@@ -517,7 +518,7 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
             case AudioManager.AUDIOFOCUS_GAIN: {
                 if( mMediaPlayer != null ) {
                     if( !mMediaPlayer.getPlayWhenReady() ) {
-                        mMediaSessionCallback.onPlay();
+                        if(!isPauseBtnClicked) mMediaSessionCallback.onPlay();
                     }
                     mMediaPlayer.setVolume(1.0f);
                 }

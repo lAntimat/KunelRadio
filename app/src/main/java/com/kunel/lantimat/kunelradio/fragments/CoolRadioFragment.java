@@ -71,6 +71,7 @@ import java.util.concurrent.TimeUnit;
 import cz.msebera.android.httpclient.Header;
 import dyanamitechetan.vusikview.VusikView;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
+import me.relex.circleindicator.CircleIndicator;
 
 
 /**
@@ -111,7 +112,7 @@ public class CoolRadioFragment extends Fragment {
     RelativeLayout rootView;
     ImageView imageView;
 
-    PagerIndicator pagerIndicator;
+    CircleIndicator pagerIndicator;
     ProgressBar progressBarPlay;
 
     ProgressBar seekBar;
@@ -231,7 +232,7 @@ public class CoolRadioFragment extends Fragment {
         stopButton = (ImageButton) v.findViewById(R.id.imageButton6);
         //Blurry.with(getContext()).from(BitmapFactory.decodeResource(getResources(),R.drawable.kunel_logo2)).into(imageView);
 
-        //pagerIndicator = (PagerIndicator) v.findViewById(R.id.custom_indicator);
+        pagerIndicator = (CircleIndicator) v.findViewById(R.id.custom_indicator);
 
         tvNowDuration = (TextView) v.findViewById(R.id.tv_current_time);
         progressBarPlay = (ProgressBar) v.findViewById(R.id.progressBar);
@@ -323,6 +324,7 @@ public class CoolRadioFragment extends Fragment {
 
             }
         });
+        pagerIndicator.setViewPager(pager);
     }
 
 
@@ -354,6 +356,7 @@ public class CoolRadioFragment extends Fragment {
                 arImages.addAll(ar);
                 if(pager!=null)
                 pager.getAdapter().notifyDataSetChanged();
+                pagerIndicator.setViewPager(pager);
 
             }
         }
@@ -379,6 +382,8 @@ public class CoolRadioFragment extends Fragment {
         if(pager!=null){
             arImages.addAll(arTemp);
             pager.getAdapter().notifyDataSetChanged();
+            pagerIndicator.setViewPager(pager);
+
         }
     }
 

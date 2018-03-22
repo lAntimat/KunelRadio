@@ -14,7 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_song"
+        app:layout_constraintBottom_toTopOf="@+id/custom_indicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -196,8 +196,21 @@
         android:visibility="gone"
         app:srcCompat="@drawable/bg_radio"
         tools:layout_conversion_absoluteHeight="0dp"
-        tools:layout_editor_absoluteY="0dp"
+        tools:layout_conversion_absoluteWidth="0dp"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_conversion_absoluteWidth="0dp" />
+        tools:layout_editor_absoluteY="0dp" />
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/custom_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_song"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:ci_drawable="@drawable/selected_radius"
+        app:ci_drawable_unselected="@drawable/black_radius"/>
 
 </android.support.constraint.ConstraintLayout>
