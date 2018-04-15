@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kunel.lantimat.kunelradio.fragments.CoolRadioFragment;
 import com.kunel.lantimat.kunelradio.fragments.InstagramFragment;
 import com.kunel.lantimat.kunelradio.fragments.FeedFragment;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     NonSwipeableViewPager pager;
     PagerAdapter pagerAdapter;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setupBottomBar();
         initPagerAdapter();
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     }
 

@@ -1,5 +1,7 @@
 package com.kunel.lantimat.kunelradio;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -17,6 +19,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaBrowserServiceCompat;
@@ -24,7 +27,6 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -323,9 +325,23 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
 
 
     private void showPlayingNotification() {
+
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationId = 1;
+        String channelId = "1";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
         NotificationCompat.Builder builder = MediaStyleHelper.from(BackgroundAudioService.this, mMediaSessionCompat);
         if( builder == null ) {
             return;
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            if(notificationManager!=null)
+            notificationManager.createNotificationChannel(mChannel);
         }
 
         Intent resultIntent = new Intent(this, MainActivity.class);
@@ -338,12 +354,14 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
 
+
+
         builder.addAction(new NotificationCompat.Action(R.drawable.ic_pause_white_24dp, "Pause", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
-        builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
+        //builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
         builder.setSmallIcon(R.drawable.butterfly_48);
         builder.setContentIntent(resultPendingIntent);
         builder.setDeleteIntent(createOnDismissedIntent(getApplicationContext(), 1));
-        NotificationManagerCompat.from(BackgroundAudioService.this).notify(1, builder.build());
+        notificationManager.notify(1, builder.build());
         startForeground(1, builder.build());
     }
 
@@ -354,7 +372,7 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
         }
 
         builder.addAction(new NotificationCompat.Action(R.drawable.ic_play_white_24dp, "Play", MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
-        builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
+        //builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
         builder.setSmallIcon(R.drawable.butterfly_48);
         builder.setDeleteIntent(createOnDismissedIntent(getApplicationContext(), 1));
         NotificationManagerCompat.from(this).notify(1, builder.build());
@@ -374,7 +392,7 @@ public class BackgroundAudioService extends MediaBrowserServiceCompat implements
     private BroadcastReceiver stopSelf = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mMediaSessionCallback.onStop();
+            if(mMediaSessionCallback!=null) mMediaSessionCallback.onStop();
         }
     };
 

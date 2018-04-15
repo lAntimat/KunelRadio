@@ -17,12 +17,17 @@ import java.util.ArrayList;
 public class SharedPrefHelp {
 
     public static void saveArrayList(Context context, ArrayList<String> list, String key){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        editor.putString(key, json);
-        editor.apply();     // This line is IMPORTANT !!!
+        try {
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = prefs.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            editor.putString(key, json);
+            editor.apply();     // This line is IMPORTANT !!!
+        } catch (Exception e) {
+
+        }
     }
 
     public static ArrayList<String> getArrayList(Context context, String key){
